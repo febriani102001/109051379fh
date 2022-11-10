@@ -2,56 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace FH
 {
 
-    
-    [SerializeField] float health, maxHealth = 1f;
-
-    [SerializeField] private float moveSpeed = 5f;
-    Rigidbody2D rb;
-    Transform target;
-    Vector2 moveDirection;
-
-    private void Awake()
+    public class Enemy : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody2D>();
-    }   
 
-    private void Start()
-    {
-        health = maxHealth;
-        target = GameObject.Find("Player").transform;
-    }
+        [SerializeField] float health, maxHealth = 1f;
 
-    private void Update()
-    {
-      if(target)
+        [SerializeField] private float moveSpeed = 5f;
+        Rigidbody2D rb;
+        Transform target;
+        Vector2 moveDirection;
+
+        private void Awake()
         {
-            Vector3 direction = (target.position - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            rb.rotation = angle;
-            moveDirection = direction;
+            rb = GetComponent<Rigidbody2D>();
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if(target)
+        private void Start()
         {
-            rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+            health = maxHealth;
+            target = GameObject.Find("Player").transform;
         }
-    }
 
-    public void TakeDamage(float damageAmount)
-    {
-        health -= damageAmount; // 3 ->  2 ->  1 ->  0 = Enemey has Died
-        
-        if(health <= 0)
+        private void Update()
         {
-            Destroy(gameObject);
-         
-        }    
-    }
+            if (target)
+            {
+                Vector3 direction = (target.position - transform.position).normalized;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                rb.rotation = angle;
+                moveDirection = direction;
+            }
+        }
 
+        private void FixedUpdate()
+        {
+            if (target)
+            {
+                rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+            }
+        }
+
+   
+        public void TakeDamage(float damageAmount)
+        {
+            health -= damageAmount; // 3 ->  2 ->  1 ->  0 = Enemey has Died
+
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                
+
+            }
+        }
+
+
+
+    }
 }

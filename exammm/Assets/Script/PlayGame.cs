@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-public class PlayGame : MonoBehaviour
+namespace FH
 {
-   public void PlayButton()
+
+  
+    public class PlayGame : MonoBehaviour
     {
-        SceneManager.LoadScene("Third");
+        [SerializeField] private AudioSource playEffect;
+        public void PlayButton()
+        {
+            SceneManager.LoadScene("Third");
+            playEffect.Play();
+        }
+
     }
-   
 }
